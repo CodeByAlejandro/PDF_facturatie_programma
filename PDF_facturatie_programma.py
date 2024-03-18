@@ -238,7 +238,7 @@ if __name__ == "__main__":
         command=select_files
     )
     select_button.grid(
-        row=0, column=0, sticky=tk.W+tk.E, pady=(0, VERT_PD)
+        row=0, column=0, sticky=tk.W+tk.E+tk.N+tk.S, pady=(0, VERT_PD)
     )
 
     # Open and resize the image using PIL
@@ -254,7 +254,7 @@ if __name__ == "__main__":
         command=show_help_select_files
     )
     select_help_button.grid(
-        row=0, column=1, sticky=tk.W+tk.E, pady=(0, VERT_PD)
+        row=0, column=1, sticky=tk.W+tk.E+tk.N+tk.S, pady=(0, VERT_PD)
     )
     clear_button = tk.Button(
         buttons_frame,
