@@ -242,12 +242,12 @@ if __name__ == "__main__":
     )
 
     # Open and resize the image using PIL
-    # image = Image.open("info_logo.png")
+    # image = Image.open("images/info_logo.png")
     # resized_image = image.thumbnail((25, 25))
     # image.save("info_logo_resized.png")
 
     # Convert the resized image to a format compatible with Tkinter
-    info_logo_image = tk.PhotoImage(file="info_logo_resized.png")
+    info_logo_image = tk.PhotoImage(file="images/info_logo_resized.png")
     select_help_button = tk.Button(
         buttons_frame,
         image=info_logo_image,
