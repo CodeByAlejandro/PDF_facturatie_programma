@@ -25,6 +25,9 @@ class GraphicalInterface():
         self.main_frame = tk.Frame(self.root)
         self.main_frame.pack(padx=10, pady=10)
 
+        # Create InterfaceController object to implement event listeners
+        self.controller = InterfaceController()
+        
         # Create stamp PDF selector row
         self._create_stamp_PDF_row()
 
@@ -54,9 +57,6 @@ class GraphicalInterface():
             text="Auteur: Alejandro De Groote"
         )
         self.author_label.grid(row=6, column=0, sticky=tk.W)
-
-        # Create InterfaceController object to implement event listeners
-        self.controller = InterfaceController()
 
 
     def _create_stamp_PDF_row(self) -> None:
