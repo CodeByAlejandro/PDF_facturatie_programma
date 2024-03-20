@@ -27,7 +27,7 @@ class GraphicalInterface():
 
         # Create InterfaceController object to implement event listeners
         self.controller = InterfaceController()
-        
+
         # Create stamp PDF selector row
         self._create_stamp_PDF_row()
 
@@ -294,7 +294,7 @@ class InterfaceController():
 
     def select_stamp_pdf(self, stamp_label: tk.Label) -> None:
         stamp_pdf_path = filedialog.askopenfilename(filetypes=[("PDF files", "*.pdf")])
-        if stamp_pdf_path is not None:
+        if stamp_pdf_path:
             stamp_label.config(text=stamp_pdf_path)
             self.stamp_pdf = Path(stamp_pdf_path)
         else:
@@ -303,7 +303,7 @@ class InterfaceController():
 
     def select_result_directory(self, result_directory_label: tk.Label) -> None:
         result_directory_path = filedialog.askdirectory()
-        if result_directory_path is not None:
+        if result_directory_path:
             result_directory_label.config(text=result_directory_path)
             self.result_directory = Path(result_directory_path)
         else:
