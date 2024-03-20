@@ -224,12 +224,12 @@ class GraphicalInterface():
         image.save(resized_image_path)
 
         # Convert the resized image to a format compatible with Tkinter
-        info_logo_image = tk.PhotoImage(file=resized_image_path)
+        self.info_logo_image = tk.PhotoImage(file=resized_image_path)
 
         # Create info file button
         self.select_info_button = tk.Button(
             self.buttons_frame,
-            image=info_logo_image,
+            image=self.info_logo_image,
             command=self.controller.show_info_select_files
         )
         # Put button in button subgrid
