@@ -1,5 +1,11 @@
 # Python virtual environments
 .venv/
 venv/
+
 # Python compilation cache
 __pycache__/
+
+# Pyinstaller files
+build/
+dist/
+*.spec
