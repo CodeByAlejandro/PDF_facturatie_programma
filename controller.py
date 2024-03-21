@@ -1,15 +1,17 @@
 from pathlib import Path
 import tkinter as tk
 from tkinter import filedialog, messagebox
-from core import PDFProcessor
+from core import Defaults, PDFProcessor
 
 
 class InterfaceController():
 
 
-    def __init__(self) -> None:
+    def __init__(self, resource_path: Path) -> None:
         self.stamp_pdf: Path | None = None
         self.result_directory: Path | None = None
+        self.defaults = Defaults(resource_path)
+        self.defaults.load_defaults()
         self.PDFProcessor = PDFProcessor()
 
 
@@ -18,8 +20,16 @@ class InterfaceController():
         if stamp_pdf_path:
             stamp_label.config(text=stamp_pdf_path)
             self.stamp_pdf = Path(stamp_pdf_path)
+            self.defaults.add_property(
+                "stamp_pdf_path",
+                stamp_pdf_path
+            )
         else:
-            stamp_label.config(text="Geen stempel PDF geselecteerd!")
+            default = self.defaults.get_property("stamp_pdf_path")
+            if isinstance(default, str):
+                stamp_label.config(text=default)
+            else:
+                stamp_label.config(text="Geen stempel PDF geselecteerd!")
 
 
     def select_result_directory(self, result_directory_label: tk.Label) -> None:
@@ -109,3 +119,6 @@ class InterfaceController():
 
         # Update status message
         status_label.config(text="Verwerking voltooid!")
+
+        # Store new defaults
+        self.defaults.store_defaults()

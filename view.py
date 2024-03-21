@@ -1,7 +1,7 @@
 from pathlib import Path
 import tkinter as tk
 from controller import InterfaceController
-from PIL import Image
+# from PIL import Image
 
 
 class GraphicalInterface():
@@ -22,7 +22,7 @@ class GraphicalInterface():
         self.main_frame.pack(padx=10, pady=10)
 
         # Create InterfaceController object to implement event listeners
-        self.controller = InterfaceController()
+        self.controller = InterfaceController(resource_path)
 
         # Create stamp PDF selector row
         self._create_stamp_PDF_row()
@@ -214,10 +214,10 @@ class GraphicalInterface():
         resized_image_path = resource_path / Path("images/info_logo_resized.png")
 
         # Open and resize info image using PIL (for devel stage of project)
-        image_path = resource_path / Path("images/info_logo.png")
-        image = Image.open(image_path)
-        image.thumbnail((25, 25))
-        image.save(resized_image_path)
+        # image_path = resource_path / Path("images/info_logo.png")
+        # image = Image.open(image_path)
+        # image.thumbnail((25, 25))
+        # image.save(resized_image_path)
 
         # Convert the resized image to a format compatible with Tkinter
         self.info_logo_image = tk.PhotoImage(file=resized_image_path)
