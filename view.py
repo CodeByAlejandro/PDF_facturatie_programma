@@ -1,6 +1,6 @@
 from pathlib import Path
 import tkinter as tk
-from controller import InterfaceController
+from exceptions import DisplayableError
 # from PIL import Image
 
 
@@ -13,6 +13,8 @@ class GraphicalInterface():
 
 
     def __init__(self, resource_path: Path) -> None:
+        self.resource_path = resource_path
+
         # Create main window
         self.root = tk.Tk()
         self.root.title("PDF Facturatieprogramma")
@@ -20,9 +22,6 @@ class GraphicalInterface():
         # Create frame to hold main grid UI elements
         self.main_frame = tk.Frame(self.root)
         self.main_frame.pack(padx=10, pady=10)
-
-        # Create InterfaceController object to implement event listeners
-        self.controller = InterfaceController(resource_path)
 
         # Create stamp PDF selector row
         self._create_stamp_PDF_row()
@@ -37,7 +36,7 @@ class GraphicalInterface():
         self._create_file_listbox()
 
         # Create frame with subgrid with file buttons
-        self._create_file_buttons(resource_path)
+        self._create_file_buttons()
 
         # Create status label
         self.status_label = tk.Label(self.main_frame, text="")
@@ -47,12 +46,18 @@ class GraphicalInterface():
             pady=GraphicalInterface.VERT_PD
         )
 
+        # Create warning/error message label
+        self.error_label = tk.Label(self.main_frame, text="")
+
+        # Create warning/error detail message label
+        self.error_detail_label = tk.Label(self.main_frame, text="")
+
         # Create author label
         self.author_label = tk.Label(
             self.main_frame,
             text="Auteur: Alejandro De Groote"
         )
-        self.author_label.grid(row=6, column=0, sticky=tk.W)
+        self.author_label.grid(row=8, column=0, sticky=tk.W)
 
 
     def _create_stamp_PDF_row(self) -> None:
@@ -71,7 +76,10 @@ class GraphicalInterface():
         )
         # Create event listener
         def handle_click_stamp_pdf():
-            self.controller.select_stamp_pdf(self.stamp_label)
+            try:
+                self.controller.select_stamp_pdf(self.stamp_label)
+            except DisplayableError as disp_ex:
+                self._handle_displayable_error(disp_ex)
         # Create stamp PDF selector button
         self.select_stamp_button = tk.Button(
             self.main_frame,
@@ -166,7 +174,7 @@ class GraphicalInterface():
         )
 
 
-    def _create_file_buttons(self, resource_path: Path) -> None:
+    def _create_file_buttons(self) -> None:
         # Create frame to hold subgrid with file buttons
         self.buttons_frame = tk.Frame(self.main_frame)
         self.buttons_frame.grid_columnconfigure(0, weight=1)
@@ -181,7 +189,7 @@ class GraphicalInterface():
         self._create_PDF_selection_file_btn()
 
         # Create info file button
-        self._create_info_file_btn(resource_path)
+        self._create_info_file_btn()
 
         # Create clear files button
         self._create_clear_files_btn()
@@ -209,12 +217,13 @@ class GraphicalInterface():
         )
 
 
-    def _create_info_file_btn(self, resource_path: Path) -> None:
+    def _create_info_file_btn(self) -> None:
         # Set image path
-        resized_image_path = resource_path / Path("images/info_logo_resized.png")
+        resized_image_path = \
+            self.resource_path / Path("images/info_logo_resized.png")
 
         # Open and resize info image using PIL (for devel stage of project)
-        # image_path = resource_path / Path("images/info_logo.png")
+        # image_path = self.resource_path / Path("images/info_logo.png")
         # image = Image.open(image_path)
         # image.thumbnail((25, 25))
         # image.save(resized_image_path)
@@ -222,11 +231,14 @@ class GraphicalInterface():
         # Convert the resized image to a format compatible with Tkinter
         self.info_logo_image = tk.PhotoImage(file=resized_image_path)
 
+        # Create event listener
+        def handle_click_show_info_select_files():
+            self.controller.show_info_select_files
         # Create info file button
         self.select_info_button = tk.Button(
             self.buttons_frame,
             image=self.info_logo_image,
-            command=self.controller.show_info_select_files
+            command=handle_click_show_info_select_files
         )
         # Put button in button subgrid
         self.select_info_button.grid(
@@ -275,5 +287,25 @@ class GraphicalInterface():
         )
 
 
+    def _handle_displayable_error(self, disp_ex: DisplayableError) -> None:
+            self.error_label.config(text=str(disp_ex))
+            self.error_label.grid(
+                row=5,
+                columnspan=2,
+                pady=GraphicalInterface.VERT_PD
+            )
+            if disp_ex.detail_msg is not None:
+                self.error_detail_label.config(text=disp_ex.detail_msg)
+                self.error_detail_label.grid(
+                    row=6,
+                    columnspan=2,
+                    pady=GraphicalInterface.VERT_PD
+                )
+
+
     def start(self) -> None:
+        # Create InterfaceController object to implement event listeners
+        from controller import InterfaceController
+        self.controller = InterfaceController(self)
+        # Start GUI
         self.root.mainloop()

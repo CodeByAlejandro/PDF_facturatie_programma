@@ -1,17 +1,24 @@
 from pathlib import Path
 import tkinter as tk
 from tkinter import filedialog, messagebox
-from core import Defaults, PDFProcessor
+from view import GraphicalInterface
+from model import Defaults
+from core import PDFProcessor
+from exceptions import DisplayableError
 
 
 class InterfaceController():
 
 
-    def __init__(self, resource_path: Path) -> None:
+    def __init__(self, gui: GraphicalInterface) -> None:
         self.stamp_pdf: Path | None = None
         self.result_directory: Path | None = None
-        self.defaults = Defaults(resource_path)
-        self.defaults.load_defaults()
+        self.gui = gui
+        self.defaults = Defaults(self.gui.resource_path)
+        try:
+            self.defaults.load_defaults()
+        except DisplayableError as disp_ex:
+            self.gui._handle_displayable_error(disp_ex)
         self.PDFProcessor = PDFProcessor()
 
 
@@ -105,12 +112,17 @@ class InterfaceController():
             content_pdf = Path(file_path)
             result_pdf_file = Path(content_pdf.stem + f"{filename_suffix}.pdf")
             result_pdf = self.result_directory / result_pdf_file
-            self.PDFProcessor.stamp_pdf_pages(
-                content_pdf,
-                self.stamp_pdf,
-                result_pdf,
-                'ALL'
-            )
+            try:
+                self.PDFProcessor.stamp_pdf_pages(
+                    content_pdf,
+                    self.stamp_pdf,
+                    result_pdf,
+                    'ALL'
+                )
+            except DisplayableError as disp_ex:
+                disp_ex.raw_msg = \
+                    "Kan één of meerdere gestempelde PDF's niet opslaan!"
+                self.gui._handle_displayable_error(disp_ex)
 
             # Update status message
             status_label.config(
@@ -121,4 +133,7 @@ class InterfaceController():
         status_label.config(text="Verwerking voltooid!")
 
         # Store new defaults
-        self.defaults.store_defaults()
+        try:
+            self.defaults.store_defaults()
+        except DisplayableError as disp_ex:
+            self.gui._handle_displayable_error(disp_ex)

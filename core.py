@@ -1,60 +1,7 @@
 from pathlib import Path
 from typing import Union, Literal, List
 from PyPDF2 import PdfWriter, PdfReader, Transformation
-import json
-
-
-class Defaults():
-
-
-    def __init__(self, resource_path: Path) -> None:
-        self.root = {}
-        self.filepath = resource_path / "defaults.json"
-
-
-    def add_property(
-        self,
-        name: str,
-        value: str | int | float | bool | list | tuple | dict | None
-    ) -> None:
-        if not isinstance(name, str):
-            raise KeyError("Defaults: JSON property should be str type!")
-        valid_value_types = (str, int, float, bool, list, tuple, dict, None)
-        if type(value) not in valid_value_types:
-            raise ValueError(
-                "Defaults: JSON value should be a valid JSON type!"
-            )
-        self.root[name] = value
-
-
-    def get_property(
-        self,
-        name: str
-    ) -> str | int | float | bool | list | tuple | dict | None:
-        value = None
-        try:
-            value = self.root[name]
-        except KeyError:
-            pass
-        return value
-
-
-    def store_defaults(self) -> None:
-        try:
-            with open(self.filepath, "wt") as json_file:
-                json.dump(self.root, json_file, indent=4)
-        except Exception:
-            pass
-            # print error to GUI
-
-
-    def load_defaults(self) -> None:
-        try:
-            with open(self.filepath, "rt") as json_file:
-                self.root = json.load(json_file)
-        except Exception:
-            pass
-            # print error to GUI
+from exceptions import ErrorLevel, DisplayableError
 
 
 class PDFProcessor():
@@ -117,5 +64,12 @@ class PDFProcessor():
             writer.add_page(content_page)
 
         # Write the fully stamped content PDF as result PDF file
-        with open(pdf_result, "wb") as fp:
-            writer.write(fp)
+        try:
+            with open(pdf_result, "wb") as fp:
+                writer.write(fp)
+        except Exception as ex:
+            raise DisplayableError(
+                error_level=ErrorLevel.ERROR,
+                raw_msg="Kan gestempelde PDF niet opslaan!",
+                cause=ex
+            )
