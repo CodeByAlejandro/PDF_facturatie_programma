@@ -1,1 +1,0 @@
-pyinstaller .\PDF_facturatie_programma.py --onedir --add-data images/:images/ --clean -y -w

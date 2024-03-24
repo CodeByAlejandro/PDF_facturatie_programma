@@ -4,8 +4,15 @@ venv/
 
 # Python compilation cache
 __pycache__/
+app/__pycache__/
 
 # Pyinstaller files
 build/
 dist/
 *.spec
+
+# Input testfiles
+input/factuur_1000*
+
+# Output files
+output/*
