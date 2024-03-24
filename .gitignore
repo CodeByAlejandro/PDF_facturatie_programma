@@ -16,3 +16,6 @@ input/factuur_1000*
 
 # Output files
 output/*
+
+# Defaults
+defaults/defaults.json

@@ -328,10 +328,6 @@ class TkGraphicalInterface():
         self.file_listbox.delete(0, tk.END)
 
 
-    def get_files_to_process(self) -> list[str]:
-        return self.file_listbox.get(0, tk.END)
-
-
     def update_status_label(self, text: str) -> None:
         self.status_label.config(text=text)
 

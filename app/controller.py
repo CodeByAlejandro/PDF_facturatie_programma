@@ -12,6 +12,7 @@ class InterfaceController():
     def __init__(self, ui: UserInterface, resource_path: Path) -> None:
         self.stamp_pdf: Path | None = None
         self.result_directory: Path | None = None
+        self.file_paths: list[Path] = []
         self.ui = ui
         self.defaults = Defaults(resource_path)
         try:
@@ -71,8 +72,11 @@ class InterfaceController():
 
     def select_files(self) -> None:
         file_paths = self.ui.select_files(filetypes=[("PDF files", "*.pdf")])
-        for file_path in file_paths:
-            self.ui.update_files_to_process(file_path)
+        for file_path_str in file_paths:
+            file_path = Path(file_path_str)
+            if file_path not in self.file_paths:
+                self.file_paths.append(file_path)
+                self.ui.update_files_to_process(file_path_str)
 
 
     def show_info_select_files(self) -> None:
@@ -107,7 +111,7 @@ class InterfaceController():
             return
 
         # Get PDF files to stamp
-        files_to_process = self.ui.get_files_to_process()
+        files_to_process = self.file_paths
 
         # Check if no PDF files to stamp have been selected
         total_files = len(files_to_process)
@@ -138,7 +142,7 @@ class InterfaceController():
 
     def _process_files_core(
         self,
-        files_to_process: list[str],
+        files_to_process: list[Path],
         filename_suffix: str
     ) -> None:
         # Show status message while processing
@@ -151,7 +155,7 @@ class InterfaceController():
         if self.result_directory is not None and self.stamp_pdf is not None:
             # Stamp all selected PDFs
             for index, file_path in enumerate(files_to_process, start=1):
-                content_pdf = Path(file_path)
+                content_pdf = file_path
                 result_pdf_file = Path(content_pdf.stem + f"{filename_suffix}.pdf")
                 result_pdf = self.result_directory / result_pdf_file
                 try:
