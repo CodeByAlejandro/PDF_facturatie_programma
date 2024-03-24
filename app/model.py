@@ -28,7 +28,7 @@ class Defaults():
             raise DisplayableError(
                 error_level=ErrorLevel.WARNING,
                 raw_msg="Kan nieuwe standaardinstelling niet toevoegen!",
-                detail_msg=f"Type '{type(name)}' is niet compatibel met " + \
+                detail_msg=f"Type '{type(value)}' is niet compatibel met " + \
                             "JSON value types!",
             )
         self.root[name] = value
