@@ -129,16 +129,20 @@ class InterfaceController():
         self.defaults.add_property("filename_suffix", filename_suffix)
 
         # Start new thread to process PDF files
-        def thread_function(self):
+        def thread_function(
+            self,
+            filename_suffix: str,
+            files_to_process: list[Path]
+        ) -> None:
             self._process_files_core(
                 self.stamp_pdf,
                 self.result_directory,
-                files_to_process,
-                filename_suffix
+                filename_suffix,
+                files_to_process
             )
         processing_thread = Thread(
             target=thread_function,
-            args=(self,)
+            args=(self, filename_suffix, files_to_process)
         )
         processing_thread.start()
 
