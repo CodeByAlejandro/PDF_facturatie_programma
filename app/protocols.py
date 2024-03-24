@@ -3,7 +3,7 @@ from typing import Protocol, Iterable, Literal
 from exceptions import DisplayableError
 
 
-class ApplicationInterface(Protocol):
+class UserInterface(Protocol):
 
     def bind_controller(self, resource_path: Path) -> None: ...
 

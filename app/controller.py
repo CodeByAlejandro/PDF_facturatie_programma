@@ -1,6 +1,6 @@
 from pathlib import Path
 from threading import Thread
-from protocols import ApplicationInterface
+from protocols import UserInterface
 from model import Defaults
 from core import PDFProcessor
 from exceptions import DisplayableError
@@ -9,7 +9,7 @@ from exceptions import DisplayableError
 class InterfaceController():
 
 
-    def __init__(self, ui: ApplicationInterface, resource_path: Path) -> None:
+    def __init__(self, ui: UserInterface, resource_path: Path) -> None:
         self.stamp_pdf: Path | None = None
         self.result_directory: Path | None = None
         self.ui = ui
