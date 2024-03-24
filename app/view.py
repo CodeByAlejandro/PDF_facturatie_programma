@@ -118,7 +118,10 @@ class TkGraphicalInterface():
         )
         # Create event listener
         def handle_click_result_directory():
-            self.controller.select_result_directory()
+            try:
+                self.controller.select_result_directory()
+            except DisplayableError as disp_ex:
+                self.handle_error(disp_ex)
         # Create result directory selector button
         self.select_result_directory_button = tk.Button(
             self.main_frame,
