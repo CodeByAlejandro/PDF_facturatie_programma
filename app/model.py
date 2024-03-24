@@ -62,6 +62,8 @@ class Defaults():
         try:
             with open(self.filepath, "rt") as json_file:
                 self.root = json.load(json_file)
+        except FileNotFoundError:
+            pass
         except Exception as ex:
             raise DisplayableError(
                 error_level=ErrorLevel.WARNING,
