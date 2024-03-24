@@ -111,7 +111,7 @@ class InterfaceController():
             return
 
         # Get PDF files to stamp
-        files_to_process = self.file_paths
+        files_to_process = self.file_paths[:]
 
         # Check if no PDF files to stamp have been selected
         total_files = len(files_to_process)
