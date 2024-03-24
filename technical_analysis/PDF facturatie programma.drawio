@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-03-24T19:15:16.412Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36" etag="Fzvf0pVY7BH5QNmhpW1O" version="24.1.0" type="device">
+<mxfile host="app.diagrams.net" modified="2024-03-24T19:55:03.354Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36" etag="6QKGI3M4BEmcdaborcMj" version="24.1.0" type="device">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="2049" dy="1054" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2206" dy="1135" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -55,18 +55,18 @@
           <mxGeometry x="165" y="40" width="270" height="100" as="geometry" />
         </mxCell>
         <mxCell id="dMBVIur_Aa2STcFH-dJI-18" value="InterfaceController" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="970" y="420" width="260" height="260" as="geometry">
+          <mxGeometry x="970" y="420" width="320" height="260" as="geometry">
             <mxRectangle x="970" y="420" width="150" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dMBVIur_Aa2STcFH-dJI-19" value="+ stamp_pdf: Path | None = None&lt;div&gt;+ result_directory: Path | None = None&lt;/div&gt;&lt;div&gt;+&amp;nbsp;file_paths: list[Path] = []&lt;/div&gt;&lt;div&gt;+ ui: UserInterface&lt;/div&gt;&lt;div&gt;+ defaults: Defaults&lt;/div&gt;&lt;div&gt;+ PDFProcessor: PDFProcessor&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="dMBVIur_Aa2STcFH-dJI-18" vertex="1">
-          <mxGeometry y="26" width="260" height="94" as="geometry" />
+          <mxGeometry y="26" width="320" height="94" as="geometry" />
         </mxCell>
         <mxCell id="dMBVIur_Aa2STcFH-dJI-20" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="dMBVIur_Aa2STcFH-dJI-18" vertex="1">
-          <mxGeometry y="120" width="260" height="8" as="geometry" />
+          <mxGeometry y="120" width="320" height="8" as="geometry" />
         </mxCell>
-        <mxCell id="dMBVIur_Aa2STcFH-dJI-21" value="&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ __init__(UserInterface, Path): None&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ select_stamp_pdf(): None&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+&amp;nbsp;select_result_directory(): None&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+&amp;nbsp;select_files(): None&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+&amp;nbsp;show_info_select_files(): None&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+&amp;nbsp;clear_files(): None&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+&amp;nbsp;process_files(): None&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+&amp;nbsp;_process_files_core(list[Path], str): None&lt;/p&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="dMBVIur_Aa2STcFH-dJI-18" vertex="1">
-          <mxGeometry y="128" width="260" height="132" as="geometry" />
+        <mxCell id="dMBVIur_Aa2STcFH-dJI-21" value="&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ __init__(UserInterface, Path): None&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ select_stamp_pdf(): None&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+&amp;nbsp;select_result_directory(): None&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+&amp;nbsp;select_files(): None&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+&amp;nbsp;show_info_select_files(): None&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+&amp;nbsp;clear_files(): None&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+&amp;nbsp;process_files(): None&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+&amp;nbsp;_process_files_core(Path, Path, str, list[Path]): None&lt;/p&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="dMBVIur_Aa2STcFH-dJI-18" vertex="1">
+          <mxGeometry y="128" width="320" height="132" as="geometry" />
         </mxCell>
         <mxCell id="PhZd0l24GyQ8YQdEIMDO-4" value="return" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;curved=0;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.25;exitY=0;exitDx=0;exitDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="dMBVIur_Aa2STcFH-dJI-18" target="seithgZvxNiS-wUwFHZv-0" edge="1">
           <mxGeometry x="-0.0992" y="22" relative="1" as="geometry">
@@ -161,7 +161,7 @@
             <mxPoint x="1080" y="700" as="sourcePoint" />
             <mxPoint x="910" y="720" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="1100" y="720" />
+              <mxPoint x="1130" y="720" />
               <mxPoint x="840" y="720" />
             </Array>
           </mxGeometry>
@@ -173,12 +173,12 @@
         </mxCell>
         <mxCell id="PhZd0l24GyQ8YQdEIMDO-41" value="is stored by" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="PhZd0l24GyQ8YQdEIMDO-35" vertex="1" connectable="0">
           <mxGeometry x="-0.2866" relative="1" as="geometry">
-            <mxPoint x="45" y="15" as="offset" />
+            <mxPoint x="56" y="15" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="PhZd0l24GyQ8YQdEIMDO-42" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="PhZd0l24GyQ8YQdEIMDO-35" vertex="1" connectable="0">
           <mxGeometry x="-0.3775" y="-1" relative="1" as="geometry">
-            <mxPoint x="55" y="-15" as="offset" />
+            <mxPoint x="64" y="-15" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="PhZd0l24GyQ8YQdEIMDO-43" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="PhZd0l24GyQ8YQdEIMDO-35" vertex="1" connectable="0">
@@ -191,19 +191,19 @@
             <mxPoint x="820" y="640" as="sourcePoint" />
             <mxPoint x="980" y="640" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="1100" y="720" />
+              <mxPoint x="1130" y="720" />
               <mxPoint x="1350" y="720" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="PhZd0l24GyQ8YQdEIMDO-44" value="is used by" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="PhZd0l24GyQ8YQdEIMDO-36" vertex="1" connectable="0">
           <mxGeometry x="0.3122" y="4" relative="1" as="geometry">
-            <mxPoint x="-144" y="19" as="offset" />
+            <mxPoint x="-124" y="19" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="PhZd0l24GyQ8YQdEIMDO-46" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="PhZd0l24GyQ8YQdEIMDO-36" vertex="1" connectable="0">
           <mxGeometry x="-0.552" relative="1" as="geometry">
-            <mxPoint x="-25" y="-16" as="offset" />
+            <mxPoint x="-16" y="-16" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="PhZd0l24GyQ8YQdEIMDO-47" value="uses" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="PhZd0l24GyQ8YQdEIMDO-36" vertex="1" connectable="0">
