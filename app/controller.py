@@ -90,6 +90,7 @@ class InterfaceController():
 
 
     def clear_files(self) -> None:
+        self.file_paths.clear()
         self.ui.clear_files_to_process()
 
 
@@ -130,6 +131,8 @@ class InterfaceController():
         # Start new thread to process PDF files
         def thread_function(self):
             self._process_files_core(
+                self.stamp_pdf,
+                self.result_directory,
                 files_to_process,
                 filename_suffix
             )
@@ -142,8 +145,10 @@ class InterfaceController():
 
     def _process_files_core(
         self,
+        stamp_pdf: Path,
+        result_directory: Path,
+        filename_suffix: str,
         files_to_process: list[Path],
-        filename_suffix: str
     ) -> None:
         # Show status message while processing
         self.ui.update_status_label(text="Bezig met verwerken...")
@@ -151,29 +156,27 @@ class InterfaceController():
         # Set number of PDF files to process
         total_files = len(files_to_process)
 
-        # Satisfy static analysis tools in IDE
-        if self.result_directory is not None and self.stamp_pdf is not None:
-            # Stamp all selected PDFs
-            for index, file_path in enumerate(files_to_process, start=1):
-                content_pdf = file_path
-                result_pdf_file = Path(content_pdf.stem + f"{filename_suffix}.pdf")
-                result_pdf = self.result_directory / result_pdf_file
-                try:
-                    self.PDFProcessor.stamp_pdf_pages(
-                        content_pdf,
-                        self.stamp_pdf,
-                        result_pdf,
-                        'ALL'
-                    )
-                except DisplayableError as disp_ex:
-                    disp_ex.raw_msg = \
-                        "Kan één of meerdere gestempelde PDF's niet opslaan!"
-                    self.ui.handle_error(disp_ex)
-
-                # Update status message
-                self.ui.update_status_label(
-                    text=f"Bezig met verwerken van {index}/{total_files} bestanden..."
+        # Stamp all selected PDFs
+        for index, file_path in enumerate(files_to_process, start=1):
+            content_pdf = file_path
+            result_pdf_file = Path(content_pdf.stem + f"{filename_suffix}.pdf")
+            result_pdf = result_directory / result_pdf_file
+            try:
+                self.PDFProcessor.stamp_pdf_pages(
+                    content_pdf,
+                    stamp_pdf,
+                    result_pdf,
+                    'ALL'
                 )
+            except DisplayableError as disp_ex:
+                disp_ex.raw_msg = \
+                    "Kan één of meerdere gestempelde PDF's niet opslaan!"
+                self.ui.handle_error(disp_ex)
+
+            # Update status message
+            self.ui.update_status_label(
+                text=f"Bezig met verwerken van {index}/{total_files} bestanden..."
+            )
 
         # Update status message
         self.ui.update_status_label(text="Verwerking voltooid!")
