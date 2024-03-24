@@ -1,6 +1,6 @@
 from pathlib import Path
 from typing import Union, Literal, List
-from PyPDF2 import PdfWriter, PdfReader, Transformation
+from PyPDF2 import PdfWriter, PdfReader, Transformation, PageObject
 from exceptions import ErrorLevel, DisplayableError
 
 
@@ -11,7 +11,7 @@ class PDFProcessor():
         self,
         content_pdf: Path,
         stamp_pdf: Path,
-        pdf_result: Path,
+        result_pdf: Path,
         page_indices: Union[Literal["ALL"], List[int]] = "ALL",
     ) -> None:
         # Get single stamp PDF page
@@ -31,6 +31,7 @@ class PDFProcessor():
 
         # Loop all content PDF pages at selected indices
         for index in page_indices:
+
             # Get content PDF page at current index
             content_page = reader.pages[index]
 
@@ -52,20 +53,28 @@ class PDFProcessor():
             stamp_y = stamp_mb.top
             y_axis_ratio = float(content_y / stamp_y)
 
-            # Scale stamp PDF page contents to size of content PDF page
-            op = Transformation().scale(sx=x_axis_ratio, sy=y_axis_ratio)
-            stamp_page.add_transformation(op)
+            # Create deep copy of original stamp PDF page
+            stamp_page_copy = PageObject.create_blank_page(
+                width=stamp_page.mediabox.width,
+                height=stamp_page.mediabox.height
+            )
+            stamp_page_copy.merge_page(stamp_page)
 
-            # Merge stamp PDF page into content PDF page
-            # = write stamp PDF after content PDF page (meaning overwrite)
-            content_page.merge_page(stamp_page)
+            # Scale copy of stamp PDF page's contents to size of content PDF page
+            op = Transformation().scale(sx=x_axis_ratio, sy=y_axis_ratio)
+            stamp_page_copy.add_transformation(op)
+
+            # Merge scaled copy of stamp PDF page into content PDF page
+            # = write scaled copy of stamp PDF after content PDF page
+            # (meaning overwrite)
+            content_page.merge_page(stamp_page_copy)
 
             # Add stamped PDF page to PdfWriter-object
             writer.add_page(content_page)
 
         # Write the fully stamped content PDF as result PDF file
         try:
-            with open(pdf_result, "wb") as fp:
+            with open(result_pdf, "wb") as fp:
                 writer.write(fp)
         except Exception as ex:
             raise DisplayableError(

@@ -1,10 +1,13 @@
 from pathlib import Path
+from typing import Iterable, Tuple, List, Literal
 import tkinter as tk
+from tkinter import filedialog, messagebox
+from controller import InterfaceController
 from exceptions import DisplayableError
 # from PIL import Image
 
 
-class GraphicalInterface():
+class TkGraphicalInterface():
 
 
     # Set global UI padding configuration
@@ -43,7 +46,7 @@ class GraphicalInterface():
         self.status_label.grid(
             row=4,
             columnspan=2,
-            pady=GraphicalInterface.VERT_PD
+            pady=TkGraphicalInterface.VERT_PD
         )
 
         # Create warning/error message label
@@ -51,6 +54,10 @@ class GraphicalInterface():
 
         # Create warning/error detail message label
         self.error_detail_label = tk.Label(self.main_frame, text="")
+
+        # Create blank row
+        self.author_label = tk.Label(self.main_frame, text="")
+        self.author_label.grid(row=7, column=0, sticky=tk.W)
 
         # Create author label
         self.author_label = tk.Label(
@@ -71,15 +78,15 @@ class GraphicalInterface():
             row=0,
             column=0,
             sticky=tk.W,
-            padx=(0, GraphicalInterface.HOR_PD),
-            pady=GraphicalInterface.VERT_PD
+            padx=(0, TkGraphicalInterface.HOR_PD),
+            pady=TkGraphicalInterface.VERT_PD
         )
         # Create event listener
         def handle_click_stamp_pdf():
             try:
-                self.controller.select_stamp_pdf(self.stamp_label)
+                self.controller.select_stamp_pdf()
             except DisplayableError as disp_ex:
-                self._handle_displayable_error(disp_ex)
+                self.handle_error(disp_ex)
         # Create stamp PDF selector button
         self.select_stamp_button = tk.Button(
             self.main_frame,
@@ -91,7 +98,7 @@ class GraphicalInterface():
             row=0,
             column=1,
             sticky=tk.W,
-            pady=GraphicalInterface.VERT_PD
+            pady=TkGraphicalInterface.VERT_PD
         )
 
 
@@ -106,14 +113,12 @@ class GraphicalInterface():
             row=1,
             column=0,
             sticky=tk.W,
-            padx=(0, GraphicalInterface.HOR_PD),
-            pady=(0, GraphicalInterface.VERT_PD)
+            padx=(0, TkGraphicalInterface.HOR_PD),
+            pady=(0, TkGraphicalInterface.VERT_PD)
         )
         # Create event listener
         def handle_click_result_directory():
-            self.controller.select_result_directory(
-                self.result_directory_label
-            )
+            self.controller.select_result_directory()
         # Create result directory selector button
         self.select_result_directory_button = tk.Button(
             self.main_frame,
@@ -125,7 +130,7 @@ class GraphicalInterface():
             row=1,
             column=1,
             sticky=tk.W+tk.E,
-            pady=(0, GraphicalInterface.VERT_PD)
+            pady=(0, TkGraphicalInterface.VERT_PD)
         )
 
 
@@ -140,19 +145,20 @@ class GraphicalInterface():
             row=2,
             column=0,
             sticky=tk.W,
-            padx=(0, GraphicalInterface.HOR_PD),
-            pady=(0, GraphicalInterface.VERT_PD)
+            padx=(0, TkGraphicalInterface.HOR_PD),
+            pady=(0, TkGraphicalInterface.VERT_PD)
         )
         # Set a default value for the filename suffix field
         default_suffix = "_aangepast"
         # Create entry for suffix input
         self.suffix_entry = tk.Entry(self.main_frame, width=30)
-        self.suffix_entry.insert(0, default_suffix) # Pre-populate the entry with the default value
+        # Pre-populate the entry with the default value
+        self.suffix_entry.insert(0, default_suffix)
         self.suffix_entry.grid(
             row=2,
             column=1,
             sticky=tk.W+tk.E,
-            pady=(0, GraphicalInterface.VERT_PD)
+            pady=(0, TkGraphicalInterface.VERT_PD)
         )
 
 
@@ -161,7 +167,7 @@ class GraphicalInterface():
         self.file_listbox = tk.Listbox(
             self.main_frame,
             selectmode=tk.MULTIPLE,
-            width=50,
+            width=70,
             height=10
         )
         # Put file listbox in main grid
@@ -169,8 +175,8 @@ class GraphicalInterface():
             row=3,
             column=0,
             sticky=tk.W,
-            padx=(0, GraphicalInterface.HOR_PD),
-            pady=GraphicalInterface.VERT_PD
+            padx=(0, TkGraphicalInterface.HOR_PD),
+            pady=TkGraphicalInterface.VERT_PD
         )
 
 
@@ -182,7 +188,7 @@ class GraphicalInterface():
             row=3,
             column=1,
             sticky=tk.W+tk.E,
-            pady=GraphicalInterface.VERT_PD
+            pady=TkGraphicalInterface.VERT_PD
         )
 
         # Create PDF selection file button
@@ -201,7 +207,7 @@ class GraphicalInterface():
     def _create_PDF_selection_file_btn(self) -> None:
         # Create event listener
         def handle_click_select_files():
-            self.controller.select_files(self.file_listbox)
+            self.controller.select_files()
         # Create PDF selection button
         self.select_button = tk.Button(
             self.buttons_frame,
@@ -213,7 +219,7 @@ class GraphicalInterface():
             row=0,
             column=0,
             sticky=tk.W+tk.E+tk.N+tk.S,
-            pady=(0, GraphicalInterface.VERT_PD)
+            pady=(0, TkGraphicalInterface.VERT_PD)
         )
 
 
@@ -233,7 +239,7 @@ class GraphicalInterface():
 
         # Create event listener
         def handle_click_show_info_select_files():
-            self.controller.show_info_select_files
+            self.controller.show_info_select_files()
         # Create info file button
         self.select_info_button = tk.Button(
             self.buttons_frame,
@@ -245,14 +251,14 @@ class GraphicalInterface():
             row=0,
             column=1,
             sticky=tk.W+tk.E+tk.N+tk.S,
-            pady=(0, GraphicalInterface.VERT_PD)
+            pady=(0, TkGraphicalInterface.VERT_PD)
         )
 
 
     def _create_clear_files_btn(self) -> None:
         # Create event listener
         def handle_click_clear_files():
-            self.controller.clear_files(self.file_listbox)
+            self.controller.clear_files()
         # Create clear files button
         self.clear_button = tk.Button(
             self.buttons_frame,
@@ -266,11 +272,7 @@ class GraphicalInterface():
     def _create_process_files_btn(self) -> None:
         # Create event listener
         def handle_click_process_files():
-            self.controller.process_files(
-                self.file_listbox,
-                self.suffix_entry,
-                self.status_label
-            )
+            self.controller.process_files()
         # Create process files button
         self.process_button = tk.Button(
             self.buttons_frame,
@@ -283,29 +285,93 @@ class GraphicalInterface():
             column=0,
             columnspan=2,
             sticky=tk.W+tk.E,
-            pady=(GraphicalInterface.VERT_PD, 0)
+            pady=(TkGraphicalInterface.VERT_PD, 0)
         )
 
 
-    def _handle_displayable_error(self, disp_ex: DisplayableError) -> None:
-            self.error_label.config(text=str(disp_ex))
-            self.error_label.grid(
-                row=5,
-                columnspan=2,
-                pady=GraphicalInterface.VERT_PD
-            )
-            if disp_ex.detail_msg is not None:
-                self.error_detail_label.config(text=disp_ex.detail_msg)
-                self.error_detail_label.grid(
-                    row=6,
-                    columnspan=2,
-                    pady=GraphicalInterface.VERT_PD
-                )
+    def bind_controller(self, resource_path: Path) -> None:
+        self.controller = InterfaceController(self, resource_path)
 
 
-    def start(self) -> None:
-        # Create InterfaceController object to implement event listeners
-        from controller import InterfaceController
-        self.controller = InterfaceController(self)
+    def start(self, resource_path: Path) -> None:
+        # Create and bind InterfaceController object to implement event listeners
+        self.bind_controller(resource_path)
         # Start GUI
         self.root.mainloop()
+
+
+    def update_stamp_pdf(self, text: str) -> None:
+        self.stamp_label.config(text=text)
+
+
+    def update_result_directory(self, text: str) -> None:
+        self.result_directory_label.config(text=text)
+
+
+    def update_filename_suffix(self, text: str) -> None:
+        self.suffix_entry.delete(0, tk.END)
+        self.suffix_entry.insert(0, text)
+
+
+    def get_filename_suffix(self) -> str:
+        return self.suffix_entry.get()
+
+
+    def update_files_to_process(self, file_path: str) -> None:
+        self.file_listbox.insert(tk.END, file_path)
+
+
+    def clear_files_to_process(self) -> None:
+        self.file_listbox.delete(0, tk.END)
+
+
+    def get_files_to_process(self) -> List[str]:
+        return self.file_listbox.get(0, tk.END)
+
+
+    def update_status_label(self, text: str) -> None:
+        self.status_label.config(text=text)
+
+
+    def show_info(self, info_title: str, info_text: str) -> None:
+        messagebox.showinfo(info_title, info_text)
+
+
+    def show_warning(self, warning_title: str, warning_text: str) -> None:
+        messagebox.showwarning(warning_title, warning_text)
+
+
+    def select_file(
+        self,
+        filetypes: Iterable[Tuple[str, str | List[str] | Tuple[str, ...]]] |
+        None = None
+    ) -> str:
+        return filedialog.askopenfilename(filetypes=filetypes)
+
+
+    def select_files(
+        self,
+        filetypes: Iterable[Tuple[str, str | List[str] | Tuple[str, ...]]] |
+        None = None
+    ) -> (tuple[str, ...] | Literal['']):
+        return filedialog.askopenfilenames(filetypes=filetypes)
+
+
+    def select_directory(self) -> str:
+        return filedialog.askdirectory()
+
+
+    def handle_error(self, disp_ex: DisplayableError) -> None:
+        self.error_label.config(text=str(disp_ex))
+        self.error_label.grid(
+            row=5,
+            columnspan=2,
+            pady=TkGraphicalInterface.VERT_PD
+        )
+        if disp_ex.detail_msg is not None:
+            self.error_detail_label.config(text=disp_ex.detail_msg)
+            self.error_detail_label.grid(
+                row=6,
+                columnspan=2,
+                pady=TkGraphicalInterface.VERT_PD
+            )

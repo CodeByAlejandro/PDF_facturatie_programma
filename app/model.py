@@ -8,7 +8,7 @@ class Defaults():
 
     def __init__(self, resource_path: Path) -> None:
         self.root = {}
-        self.filepath = resource_path / "defaults.json"
+        self.filepath = resource_path / "defaults/defaults.json"
 
 
     def add_property(
@@ -41,13 +41,8 @@ class Defaults():
         value = None
         try:
             value = self.root[name]
-        except KeyError as ex:
-            raise DisplayableError(
-                error_level=ErrorLevel.WARNING,
-                raw_msg="Kan bestaande standaardinstelling niet ophalen!",
-                detail_msg=f"JSON key '{name}' is onbestaand!",
-                cause=ex
-            )
+        except KeyError:
+            pass
         return value
 
 
