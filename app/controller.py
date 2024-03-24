@@ -148,7 +148,7 @@ class InterfaceController():
         stamp_pdf: Path,
         result_directory: Path,
         filename_suffix: str,
-        files_to_process: list[Path],
+        files_to_process: list[Path]
     ) -> None:
         # Show status message while processing
         self.ui.update_status_label(text="Bezig met verwerken...")
