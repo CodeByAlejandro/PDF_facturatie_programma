@@ -1,6 +1,5 @@
 from pathlib import Path
 from threading import Thread
-from typing import List
 from protocols import ApplicationInterface
 from model import Defaults
 from core import PDFProcessor
@@ -139,7 +138,7 @@ class InterfaceController():
 
     def _process_files_core(
         self,
-        files_to_process: List[str],
+        files_to_process: list[str],
         filename_suffix: str
     ) -> None:
         # Show status message while processing

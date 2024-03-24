@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Iterable, Tuple, List, Literal
+from typing import Iterable, Literal
 import tkinter as tk
 from tkinter import filedialog, messagebox
 from controller import InterfaceController
@@ -328,7 +328,7 @@ class TkGraphicalInterface():
         self.file_listbox.delete(0, tk.END)
 
 
-    def get_files_to_process(self) -> List[str]:
+    def get_files_to_process(self) -> list[str]:
         return self.file_listbox.get(0, tk.END)
 
 
@@ -346,7 +346,7 @@ class TkGraphicalInterface():
 
     def select_file(
         self,
-        filetypes: Iterable[Tuple[str, str | List[str] | Tuple[str, ...]]] |
+        filetypes: Iterable[tuple[str, str | list[str] | tuple[str, ...]]] |
         None = None
     ) -> str:
         return filedialog.askopenfilename(filetypes=filetypes)
@@ -354,7 +354,7 @@ class TkGraphicalInterface():
 
     def select_files(
         self,
-        filetypes: Iterable[Tuple[str, str | List[str] | Tuple[str, ...]]] |
+        filetypes: Iterable[tuple[str, str | list[str] | tuple[str, ...]]] |
         None = None
     ) -> (tuple[str, ...] | Literal['']):
         return filedialog.askopenfilenames(filetypes=filetypes)

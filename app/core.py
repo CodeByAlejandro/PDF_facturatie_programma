@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Union, Literal, List
+from typing import Union, Literal
 from PyPDF2 import PdfWriter, PdfReader, Transformation, PageObject
 from exceptions import ErrorLevel, DisplayableError
 
@@ -12,7 +12,7 @@ class PDFProcessor():
         content_pdf: Path,
         stamp_pdf: Path,
         result_pdf: Path,
-        page_indices: Union[Literal["ALL"], List[int]] = "ALL",
+        page_indices: Union[Literal["ALL"], list[int]] = "ALL",
     ) -> None:
         # Get single stamp PDF page
         reader = PdfReader(stamp_pdf)
